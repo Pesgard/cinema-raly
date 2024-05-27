@@ -4,7 +4,8 @@
 import { deleteApp, getApp, getApps, initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, } from 'firebase/auth'
-import { getFirestore, doc,  setDoc, } from "firebase/firestore";
+import { getFirestore, doc, setDoc, addDoc, collection } from "firebase/firestore";
+import Swal from 'sweetalert2'
 
 const firebaseConfig = {
     apiKey: "AIzaSyDvmZq6nnysodZUMksFO4L45I6ExFDJuZc",
@@ -48,13 +49,37 @@ export async function createUser(email, password, firstName, lastName) {
             lastName: lastName
         });
 
-        // Muestra un mensaje de éxito con SweetAlert2
-
-
         window.location.href = '/'
 
     } catch (error) {
         // Muestra un mensaje de error con SweetAlert2
-    
+        console.log(error)
+    }
+}
+
+export async function createPurchase(email, pelicula, dia, hora, asientos, total) {
+    try {
+        // Guarda la información de la compra en Firestore
+        await addDoc(collection(db, 'compras'), {
+            email: email,
+            pelicula: pelicula,
+            dia: dia,
+            hora: hora,
+            asientos: asientos,
+            total: total
+        });
+
+        // Muestra un mensaje de éxito con SweetAlert2
+        Swal.fire({
+            title: 'Compra realizada',
+            text: 'Tu compra ha sido realizada con éxito',
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
+        }).then(() => {
+            window.location.href = '/dashboard'
+        })
+
+    } catch (error) {
+        return console.log(error)
     }
 }

@@ -33,7 +33,7 @@
 <div class="bg-white w-screen h-screen">
 	<AppBar background="bg-white">
 		<svelte:fragment slot="lead">
-			<img alt="Logotipo" src={Logo} width="30" />
+			<img alt="Logotipo" src={Logo} width="120" />
 		</svelte:fragment>
 		<svelte:fragment slot="trail">
 			<p class="text-md">Tienes cuenta?</p>

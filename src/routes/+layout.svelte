@@ -1,13 +1,13 @@
 <script>
-// @ts-nocheck
-
+	// @ts-nocheck
+	import { initializeStores, Modal } from '@skeletonlabs/skeleton';
 	import '../app.postcss';
 	import { onMount } from 'svelte';
 	import { auth } from '../lib/firebase';
 	import { browser } from '$app/environment';
 	import { authStore } from '../stores/authStore';
 
-	
+	initializeStores();
 	onMount(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
 			console.log(user);
@@ -20,7 +20,7 @@
 				!$authStore?.currentUser &&
 				!$authStore.isLoading &&
 				window.location.pathname !== '/'
-			) {	
+			) {
 				window.location.href = '/';
 				console.log(authStore.currentUser, authStore.isLoading);
 			}
@@ -29,7 +29,7 @@
 	});
 </script>
 
+<Modal />
 <div class="flex flex-row bg-white w-screen h-screen">
-	
 	<slot />
 </div>
